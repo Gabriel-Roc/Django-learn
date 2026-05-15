@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block title%}Create New List{% endblock %}
+{% block content %}
+<div>
+<h1>Create a New To-Do List</h1>
+<form method="POST" action="/lists/new/">
+    {% csrf_token %}
+    {{form_list.as_p}}
+    <button type="submit" name="save">Create List</button>
+</form>
+<h1>Create a New To-Do Item</h1>
+<form method="POST" action="/lists/new/">
+    {% csrf_token %}
+    {{form_item.as_p}}
+    <button type="submit" name="save">Create Item</button>
+</form>
+</div>
+<br>
+<h2><a href="/lists/">See your lists</a></h2>
+{% endblock %}

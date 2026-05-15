@@ -2,18 +2,18 @@
 {% extends 'base.html' %}
 {% block title%}View List{% endblock %}
 {% block content %}
+<div>
 {% for list in lists %}
-    <li>
     <h3>{{ list.name }}</h3>
     {% for item in items %}
-        <li>
-            <br>
+        <ul>
             {% if item.todo_list == list %}
-            {{ item.text }}: {% if item.completed %}Completed{% else %}Not Completed{% endif%}
-            {% endif%}
-        </li>
+            {{ item.text }}: {% if item.completed %}Completed{% else %}Not Completed{% endif %}
+            {% endif %}
+        </ul>
     {% endfor %}
-    </li>
-    <br>
 {% endfor %}
+</div>
+<br>
+<h2><a href="/lists/new/">Create a New List</a></h2>
 {% endblock %}
