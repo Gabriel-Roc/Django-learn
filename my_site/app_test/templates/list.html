@@ -3,17 +3,33 @@
 {% block title%}View List{% endblock %}
 {% block content %}
 <div>
+<form method="POST" action="#">
+{% csrf_token %}  
 {% for list in lists %}
     <h3>{{ list.name }}</h3>
     {% for item in items %}
         <ul>
             {% if item.todo_list == list %}
-            {{ item.text }}: {% if item.completed %}Completed{% else %}Not Completed{% endif %}
+                {{ item.text }}: 
+                {% if item.completed == True %}
+                    <input type="checkbox" value="clicked" name="{{item.id}}" checked>
+                {% else %}
+                    <input type="checkbox" value="clicked" name="{{item.id}}">
+                {% endif %}
             {% endif %}
         </ul>
-    {% endfor %}
+    {% endfor %} 
 {% endfor %}
+<button type="submit", name="save", value="save">Save Checklists</button>
+</form>
 </div>
-<br>
+<div>
+<form method="POST" action="#">
+    <h1>Create a New To-Do Item</h1>
+    {{ form_item.as_p }}
+    {% csrf_token %}
+    <button type="submit", name="saveItem", value="saveItem">Save Item</button>
+</form>
+</div>
 <h2><a href="/lists/new/">Create a New List</a></h2>
 {% endblock %}
