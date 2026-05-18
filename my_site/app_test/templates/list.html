@@ -3,33 +3,38 @@
 {% block title%}View List{% endblock %}
 {% block content %}
 <div>
-<form method="POST" action="#">
-{% csrf_token %}  
-{% for list in lists %}
-    <h3>{{ list.name }}</h3>
-    {% for item in items %}
-        <ul>
-            {% if item.todo_list == list %}
-                {{ item.text }}: 
+    <form method="POST" action="#">
+    {% csrf_token %}  
+    {% for list in lists %}
+        <h3>{{ list.name }}</h3>
+        {% for item in items %}
+        {% if item.todo_list == list %}
+            <div class="mb-2 input-group-prepend input-group-text">
                 {% if item.completed == True %}
                     <input type="checkbox" value="clicked" name="{{item.id}}" checked>
                 {% else %}
-                    <input type="checkbox" value="clicked" name="{{item.id}}">
+                    <input type="checkbox" value="clicked" name="{{item.id}}">    
                 {% endif %}
-            {% endif %}
-        </ul>
-    {% endfor %} 
-{% endfor %}
-<button type="submit", name="save", value="save">Save Checklists</button>
-</form>
+                <input type="text", value="{{item.text}}" class="form-control ms-2">
+            </div>   
+        {% else %}
+        {% endif %}
+        {% endfor %} 
+    {% endfor %}
+    <div class="input-group mb-2">
+        <button type="submit", name="save", value="save" class="btn btn-success">Save Checklists</button>
+    </div>
+    </form>
 </div>
 <div>
-<form method="POST" action="#">
-    <h1>Create a New To-Do Item</h1>
-    {{ form_item.as_p }}
-    {% csrf_token %}
-    <button type="submit", name="saveItem", value="saveItem">Save Item</button>
-</form>
+    <form method="POST" action="#">
+        <div class="input-group-prepend mb-2">
+            <h1>Create a New To-Do Item</h1>
+            {{ form_item.text }}
+            {{ form_item.todo_list }}
+            {% csrf_token %}
+            <button type="submit", name="saveItem", value="saveItem" class="btn btn-success">Save Item</button>
+        </div>    
+    </form>
 </div>
-<h2><a href="/lists/new/">Create a New List</a></h2>
 {% endblock %}
