@@ -4,7 +4,7 @@ from .models import ToDoItem, ToDoList
 from .forms import CreateNewList, CreateNewItem
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'app_test/home.html')
 
 def view_list(request):
     items = ToDoItem.objects.all()
@@ -25,7 +25,7 @@ def view_list(request):
                 l = form_item.cleaned_data['todo_list']
                 t = ToDoItem(text=i, todo_list=l) # to do item that is on models.py
                 t.save()
-    return render(request, 'list.html', {'items': items, 'lists': lists, 'form_item': form_item})
+    return render(request, 'app_test/list.html', {'items': items, 'lists': lists, 'form_item': form_item})
 
 def new_list(request):
     if request.method == 'POST':
@@ -36,4 +36,4 @@ def new_list(request):
             t.save()
     else:
         form_list = CreateNewList()
-    return render(request, 'new_list.html', {'form_list': form_list})
+    return render(request, 'app_test/new_list.html', {'form_list': form_list})
