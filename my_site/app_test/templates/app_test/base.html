@@ -39,14 +39,20 @@
         <a href="/home/">Home</a>
         <a href="/lists/">Lists</a>
         <a href="/lists/new/">New List</a>
+        <hr class="mt-0 mb-0 w-75 ms-3">
+        {% if user.is_authenticated %}
+            <a href="/logout">Log-out</a>
+        {% else %}
+            <a href="/login/">Log-in</a>
+        {% endif %}
     </div>
     <div class="main">
         <div class="row ms-1 w-100">
             <div class="col-8">
                 <h1 class="mt-2">Coolest Site</h1>
                 <hr class="mt-0 mb-4">
-                {% block content %}
-                {% endblock %}   
+                    {% block content %}
+                    {% endblock %}   
             </div>
         </div>
     </div>

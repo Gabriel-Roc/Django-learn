@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+{% extends "app_test/base.html" %}
+{% block title %}Log-out{% endblock %}
+
+{% block content %}
+<form method="POST" class="form-group">
+    {% csrf_token %}
+    <p>Click <button type="submit" class="btn btn-success">Here</button> to Logout</p>
+</form>
+{% endblock %}
