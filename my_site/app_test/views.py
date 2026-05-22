@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import ToDoItem, ToDoList
 from .forms import CreateNewList, CreateNewItem
@@ -27,6 +27,11 @@ def view_list(request):
                 l = form_item.cleaned_data['todo_list']
                 t = ToDoItem(text=i, todo_list=l) # to do item that is on models.py
                 t.save()
+        if request.POST.get('deleteItem'):
+            for i in lists:
+                if request.POST.get('deleteItem') == str(i.id): # value in html is as a STRING
+                    i.delete()
+                    return redirect('/lists')
     return render(request, 'app_test/list.html', {'items': items, 'lists': lists, 'form_item': form_item})
 
 @login_required
@@ -42,9 +47,12 @@ def new_list(request):
             i need to call in the form and then add that into the specific model field
             THEN save the model
             '''
+            return redirect('/lists')
     else:
         form_list = CreateNewList()
     return render(request, 'app_test/new_list.html', {'form_list': form_list})
 
 def invalid_user(request):
+    if request.user.is_authenticated:
+        return redirect('/home')
     return render(request, 'app_test/invalid_user.html')

@@ -4,25 +4,28 @@
 {% block content %}
 <div>
     <form method="POST" action="#">
-    {% csrf_token %}  
+    {% csrf_token %}
     {% for list in lists %}
-        <h3>{{ list.name }}</h3>
-        {% for item in items %}
-        {% if item.todo_list == list %}
-            <div class="mb-2 input-group-prepend input-group-text">
-                {% if item.completed == True %}
-                    <input type="checkbox" value="clicked" name="{{item.id}}" checked>
+        {% if list.user == request.user %}
+            <h3>{{ list.name }}<button type="submit" onclick="return confirm('Delete this list?')" name="deleteItem" value="{{list.id}}" class="btn btn-outline-danger btn-sm ms-3">Delete</button></h3>
+            {% for item in items %}
+                {% if item.todo_list == list %}
+                    <div class="mb-2 input-group-prepend input-group-text">
+                        {% if item.completed == True %}
+                            <input type="checkbox" value="clicked" name="{{item.id}}" checked>
+                        {% else %}
+                            <input type="checkbox" value="clicked" name="{{item.id}}">    
+                        {% endif %}
+                        <input type="text", value="{{item.text}}" class="form-control ms-2">
+                    </div>   
                 {% else %}
-                    <input type="checkbox" value="clicked" name="{{item.id}}">    
                 {% endif %}
-                <input type="text", value="{{item.text}}" class="form-control ms-2">
-            </div>   
-        {% else %}
+            {% endfor %}
         {% endif %}
-        {% endfor %} 
     {% endfor %}
+    
     <div class="input-group mb-2">
-        <button type="submit", name="save", value="save" class="btn btn-success">Save Checklists</button>
+        <button type="submit" name="save" value="save" class="btn btn-success">Save Checklists</button>
     </div>
     </form>
 </div>
